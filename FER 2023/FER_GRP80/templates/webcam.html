@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <title>FER</title>
+</head>
+
+<body>
+    <h1 class="container text-center pt-1">Live streaming</h1>
+    <div class="container text-center pt-2">
+        <button class="btn btn-primary" onclick="capture_and_show_pic()">Take Pic</button>
+        <button class="btn btn-primary" onclick="webcam_live_stream_prediction()">Live Prediction</button>
+        <button class="btn btn-primary" onclick="start_streaming()">Stream</button>
+        <br>
+        <br>
+    </div>
+    <div class="container text-center pt-2">
+    <form action="/webcam_image_predict" method="post">
+        <button class="btn btn-primary" id="predict_image_button">Predict on Image</button>
+    </form>
+    
+    </div>
+    <div class="container text-center pt-2">
+
+        <img src="{{ url_for('streaming') }}" width="60%" id="streaimg_frames" />
+    
+    <br>
+    <br>
+    <form action="/use_app" method="post">
+        <button class="btn btn-primary" id="predict_image_button">Use App Again</button>
+    </form>
+</div>
+<br>
+<br>
+    <script>
+        document.getElementById("predict_image_button").style.display = "none"
+        document.getElementById("predict_video_button").style.display = "none"
+
+        function capture_and_show_pic() {
+            var xhr = new XMLHttpRequest();
+
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == XMLHttpRequest.DONE) {
+                    document.getElementById("streaimg_frames").src = "static/uploaded_files/webcam_image.jpg";
+                }
+            };
+
+            xhr.open('POST', '/capture_and_show_pic', true);
+            xhr.send();
+            document.getElementById("predict_image_button").style.display = "inline";
+        }
+
+        function start_streaming() {
+            document.getElementById("streaimg_frames").src = "{{ url_for('streaming') }}";
+        }
+
+        function webcam_live_stream_prediction() {
+            document.getElementById("streaimg_frames").src = "{{ url_for('webcam_live_streaming_prediction') }}";
+        }
+
+        
+
+    
+
+    </script>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

@@ -1,0 +1,4 @@
+install flask using command: pip install flask
+install deepface using command: pip install deepface
+
+then run app.py with command: python app.py
